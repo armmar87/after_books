@@ -27,6 +27,7 @@
             <th>Name</th>
             <th width="280px">Action</th>
         </tr>
+        @php $i=0; @endphp
         @foreach ($afters as $after)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -47,8 +48,6 @@
         @endforeach
     </table>
 
-
-    {!! $afters->links() !!}
 
 
 @endsection
