@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Books;
+use App\Afters;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
@@ -13,7 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        //
+        $books = Books::all();
+        return view('books.books',compact('books'));
     }
 
     /**
@@ -23,7 +27,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $afters = Afters::all();
+        return view('books.create', compact('afters'));
     }
 
     /**
@@ -34,7 +39,23 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'after_ids' => 'required',
+        ]);
+
+        $book = new Books();
+        $book->name = $request->name;
+        $book->save();
+
+        foreach ($request->after_ids as $after_id) {
+            DB::table('book_after')->insert([
+                ['after_id' => $after_id, 'book_id' => $book->id],
+            ]);
+        }
+
+        return redirect()->route('books.index')
+            ->with('success','Book created successfully.');
     }
 
     /**
@@ -43,9 +64,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Books $book)
     {
-        //
+        return view('books.show',compact('book'));
     }
 
     /**
@@ -56,7 +77,13 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+
+//        $book = Books::with('afters')->find($id);
+        $book = Books::find($id);
+        $book->afters()->attach($book);
+        dd($book);
+
+        return view('books.edit',compact('book'));
     }
 
     /**
@@ -66,9 +93,15 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Books $book)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+        ]);
+        $book->update($request->all());
+
+        return redirect()->route('books.index')
+            ->with('success','Book updated successfully');
     }
 
     /**
@@ -77,8 +110,11 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Books $book)
     {
-        //
+        $book->delete();
+
+        return redirect()->route('books.index')
+            ->with('success','Book deleted successfully');
     }
 }

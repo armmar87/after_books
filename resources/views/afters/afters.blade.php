@@ -8,7 +8,7 @@
                 <h2>Afters</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('afters.create') }}"> Create New Product</a>
+                <a class="btn btn-success" href="{{ route('afters.create') }}"> Create New After</a>
             </div>
         </div>
     </div>
