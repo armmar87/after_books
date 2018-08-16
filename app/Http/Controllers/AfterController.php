@@ -55,8 +55,9 @@ class AfterController extends Controller
      * @param  \App\After  $after
      * @return \Illuminate\Http\Response
      */
-    public function show(After $after)
+    public function show($id)
     {
+        $after = After::with('books')->find($id);
         return view('afters.show',compact('after'));
     }
 

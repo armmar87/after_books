@@ -1,4 +1,4 @@
-@extends('products.layout')
+@extends('layouts.layout')
 
 
 @section('content')
@@ -8,7 +8,7 @@
                 <h2> Show After Books</h2>
             </div>
             <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
+                <a class="btn btn-primary" href="{{ route('afters.index') }}"> Back</a>
             </div>
         </div>
     </div>
@@ -18,13 +18,15 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Name:</strong>
-                {{ $product->name }}
+                {{ $after->name }}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Details:</strong>
-                {{ $product->detail }}
+                <strong>Books:</strong>
+                @foreach($after->books as $book)
+                    {{  !$loop->last ? $book->name .', ' : $book->name }}
+                @endforeach
             </div>
         </div>
     </div>
