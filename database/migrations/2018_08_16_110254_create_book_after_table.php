@@ -15,8 +15,12 @@ class CreateBookAfterTable extends Migration
     {
         Schema::create('book_after', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('after_id');
-            $table->integer('book_id');
+            $table->integer('after_id')->unsigned()->nullable();
+            $table->foreign('after_id')->references('id')
+                ->on('afters')->onDelete('cascade');
+            $table->integer('book_id')->unsigned()->nullable();
+            $table->foreign('book_id')->references('id')
+                ->on('books')->onDelete('cascade');
         });
     }
 

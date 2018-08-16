@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Books;
-use App\Afters;
+use App\Book;
+use App\After;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +16,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Books::all();
+        $books = Book::all();
         return view('books.books',compact('books'));
     }
 
@@ -27,7 +27,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $afters = Afters::all();
+        $afters = After::all();
         return view('books.create', compact('afters'));
     }
 
@@ -44,7 +44,7 @@ class BookController extends Controller
             'after_ids' => 'required',
         ]);
 
-        $book = new Books();
+        $book = new Book();
         $book->name = $request->name;
         $book->save();
 
@@ -64,7 +64,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Books $book)
+    public function show(Book $book)
     {
         return view('books.show',compact('book'));
     }
@@ -79,7 +79,7 @@ class BookController extends Controller
     {
 
 //        $book = Books::with('afters')->find($id);
-        $book = Books::find($id);
+        $book = Book::find($id);
         $book->afters()->attach($book);
         dd($book);
 
@@ -93,7 +93,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Books $book)
+    public function update(Request $request, Book $book)
     {
         request()->validate([
             'name' => 'required',
@@ -110,7 +110,7 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Books $book)
+    public function destroy(Book $book)
     {
         $book->delete();
 

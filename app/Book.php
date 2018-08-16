@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Afters extends Model
+class Book extends Model
 {
     public $timestamps = false;
 
@@ -12,8 +12,8 @@ class Afters extends Model
         'name'
     ];
 
-    public function books()
+    public function afters()
     {
-        return $this->belongsToMany('App\Books', 'after_book', 'after_id', 'book_id');
+        return $this->belongsToMany('App\Afters');
     }
 }

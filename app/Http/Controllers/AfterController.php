@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Afters;
+use App\After;
 use Illuminate\Http\Request;
 
 class AfterController extends Controller
@@ -14,7 +14,7 @@ class AfterController extends Controller
      */
     public function index()
     {
-        $afters = Afters::all();
+        $afters = After::all();
 
         return view('afters.afters',compact('afters'));
     }
@@ -42,7 +42,7 @@ class AfterController extends Controller
             'name' => 'required',
         ]);
 
-        Afters::create($request->all());
+        After::create($request->all());
 
         return redirect()->route('afters.index')
             ->with('success','After created successfully.');
@@ -52,22 +52,22 @@ class AfterController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Afters  $after
+     * @param  \App\After  $after
      * @return \Illuminate\Http\Response
      */
     public function show(After $after)
     {
-        return view('Afters.show',compact('After'));
+        return view('afters.show',compact('after'));
     }
 
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Afters  $after
+     * @param  \App\After  $after
      * @return \Illuminate\Http\Response
      */
-    public function edit(Afters $after)
+    public function edit(After $after)
     {
         return view('afters.edit',compact('after'));
     }
@@ -77,10 +77,10 @@ class AfterController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Afters  $after
+     * @param  \App\After  $after
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Afters $after)
+    public function update(Request $request, After $after)
     {
         request()->validate([
             'name' => 'required',
@@ -95,10 +95,10 @@ class AfterController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Afters  $after
+     * @param  \App\After  $after
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Afters $after)
+    public function destroy(After $after)
     {
         $after->delete();
 
