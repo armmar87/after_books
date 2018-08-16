@@ -15,6 +15,6 @@ class Book extends Model
 
     public function afters()
     {
-        return $this->belongsToMany('App\After');
+        return $this->belongsToMany(After::class);
     }
 }

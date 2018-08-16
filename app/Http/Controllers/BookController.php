@@ -48,13 +48,8 @@ class BookController extends Controller
         $book->name = $request->name;
         $book->save();
 
-//        $book->afters()->attach($request->after_ids);
-
-        foreach ($request->after_ids as $after_id) {
-            DB::table('book_after')->insert([
-                ['after_id' => $after_id, 'book_id' => $book->id],
-            ]);
-        }
+        $after = After::find($request->after_ids);
+        $book->afters()->attach($after);
 
         return redirect()->route('books.index')
             ->with('success','Book created successfully.');
@@ -80,12 +75,10 @@ class BookController extends Controller
     public function edit($id)
     {
 
+        $afters = After::all();
         $book = Book::with('afters')->find($id);
-//        $book = Book::find($id);
-//        $book->afters()->attach($book);
-        dd($book);
 
-        return view('books.edit',compact('book'));
+        return view('books.edit',compact('book', 'afters'));
     }
 
     /**
@@ -99,8 +92,15 @@ class BookController extends Controller
     {
         request()->validate([
             'name' => 'required',
+            'after_ids' => 'required',
         ]);
-        $book->update($request->all());
+
+        $book->name = $request->name;
+        $book->save();
+
+        DB::table('after_book')->where('book_id',  '=', $book->id)->delete();
+        $after = After::find($request->after_ids);
+        $book->afters()->attach($after);
 
         return redirect()->route('books.index')
             ->with('success','Book updated successfully');
@@ -115,6 +115,8 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         $book->delete();
+
+        DB::table('after_book')->where('book_id',  '=', $book->id)->delete();
 
         return redirect()->route('books.index')
             ->with('success','Book deleted successfully');

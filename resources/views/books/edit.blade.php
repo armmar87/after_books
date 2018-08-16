@@ -26,7 +26,7 @@
     @endif
 
 
-    <form action="{{ route('afters.update',$book->id) }}" method="POST">
+    <form action="{{ route('books.update',$book->id) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -36,6 +36,23 @@
                 <div class="form-group">
                     <strong>Name:</strong>
                     <input type="text" name="name" value="{{ $book->name }}" class="form-control" placeholder="Name">
+                </div>
+                <div class="form-group">
+                    <strong>Select After:</strong>
+                    <div class="autocomplete" style="width:300px;">
+                        <select class="multipleSelect" multiple name="after_ids[]">
+                            @foreach($afters as $after)
+                                <option value="{{$after->id}}"
+                                    @foreach($book->afters as $bookAfter)
+                                        @if($after->id == $bookAfter->id)
+                                            selected="selected"
+                                        @endif
+                                    @endforeach
+                                    >{{$after->name}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -47,4 +64,10 @@
     </form>
 
 
+@endsection
+
+@section('scripts')
+    <script>
+        $('.multipleSelect').fastselect();
+    </script>
 @endsection

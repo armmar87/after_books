@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBookAfterTable extends Migration
+class CreateAfterBookTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateBookAfterTable extends Migration
      */
     public function up()
     {
-        Schema::create('book_after', function (Blueprint $table) {
+        Schema::create('after_book', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('after_id')->unsigned()->nullable();
             $table->foreign('after_id')->references('id')
@@ -31,6 +31,6 @@ class CreateBookAfterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('book_after');
+        Schema::dropIfExists('after_book');
     }
 }

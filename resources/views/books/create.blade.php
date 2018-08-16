@@ -35,6 +35,8 @@
                 <div class="form-group">
                     <strong>Book Name:</strong>
                     <input  style="margin-bottom: 20px" type="text" name="name" class="form-control" placeholder="Book Name">
+                </div>
+                <div class="form-group">
                     <strong>Select After:</strong>
                     <div class="autocomplete" style="width:300px;">
                         <select class="multipleSelect" multiple name="after_ids[]">
@@ -42,8 +44,6 @@
                                 <option value="{{$after->id}}">{{$after->name}}</option>
                             @endforeach
                         </select>
-
-                        {{--<input class="form-control" multiple id="myInput" type="text" name="after_id" placeholder="Select After">--}}
                     </div>
                 </div>
             </div>
@@ -62,8 +62,5 @@
 @section('scripts')
     <script>
         $('.multipleSelect').fastselect();
-
-        // var afters = ['ash', 'arm', 'gg'];
-        // autocomplete(document.getElementById("myInput"), afters);
     </script>
 @endsection
