@@ -48,6 +48,8 @@ class BookController extends Controller
         $book->name = $request->name;
         $book->save();
 
+//        $book->afters()->attach($request->after_ids);
+
         foreach ($request->after_ids as $after_id) {
             DB::table('book_after')->insert([
                 ['after_id' => $after_id, 'book_id' => $book->id],
@@ -78,9 +80,9 @@ class BookController extends Controller
     public function edit($id)
     {
 
-//        $book = Books::with('afters')->find($id);
-        $book = Book::find($id);
-        $book->afters()->attach($book);
+        $book = Book::with('afters')->find($id);
+//        $book = Book::find($id);
+//        $book->afters()->attach($book);
         dd($book);
 
         return view('books.edit',compact('book'));
